@@ -245,7 +245,8 @@ def kitti_labels_to_yolo(dataroot):
     img_file_names = sorted(os.listdir(imgs_dir))
     label_file_names = sorted(os.listdir(labels_dir))
     label_dict = dict(zip(class_names, range(len(class_names))))
-
+    print(len(img_file_names))
+    print(len(label_file_names))
     for img_file_name, label_file_name in zip(img_file_names, label_file_names):
         img_path = join(imgs_dir, img_file_name)
         label_path = join(labels_dir, label_file_name)

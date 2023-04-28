@@ -1,0 +1,23 @@
+services:
+  test:
+    user: "${CURRENT_UID}"
+    image: cuda1130:latest
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+#    command: nvidia-smi
+    volumes:
+      - ./output/:/opt/project/output/
+      - ./data/:/opt/dua/data/
+      - ./checkpoints/:/opt/dua/checkpoints/
+    # Debug
+    tty: true
+    stdin_open: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+

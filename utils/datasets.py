@@ -184,7 +184,7 @@ class LoadImagesAndLabels(Dataset):  # for KITTI training/testing
         if exists:
             d = f"Scanning '{cache_path}' images and labels... {nf} found, {nm} missing, {ne} empty, {nc} corrupted"
             tqdm(None, desc=prefix + d, total=n, initial=n)  # display cache results
-        assert nf > 0 or not augment, f'{prefix}No labels in {cache_path}. Can not train without labels. See {help_url}'
+            assert nf > 0 or not augment, f'{prefix}No labels in {cache_path}. Can not train without labels. See {help_url}'
 
         # Read cache
         cache.pop('hash')  # remove hash
@@ -257,10 +257,11 @@ class LoadImagesAndLabels(Dataset):  # for KITTI training/testing
                 segments = []  # instance segments
                 assert (shape[0] > 9) & (shape[1] > 9), f'image size {shape} <10 pixels'
                 assert im.format.lower() in img_formats, f'invalid image format {im.format}'
-
+                print(lb_file)
                 # verify labels
                 if os.path.isfile(lb_file):
                     nf += 1  # label found
+                    print(lb_file)
                     with open(lb_file, 'r') as f:
                         l = [x.split() for x in f.read().strip().splitlines() if len(x)]
                         if any([len(x) > 8 for x in l]):  # is segment
@@ -274,6 +275,7 @@ class LoadImagesAndLabels(Dataset):  # for KITTI training/testing
                         assert (l[:, 1:] <= 1).all(), 'non-normalized or out of bounds coordinate labels'
                         assert np.unique(l, axis=0).shape[0] == l.shape[0], 'duplicate labels'
                     else:
+                        print(lb_file)
                         ne += 1  # label empty
                         l = np.zeros((0, 5), dtype=np.float32)
                 else:

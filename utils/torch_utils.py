@@ -64,6 +64,7 @@ def select_device(device='', batch_size=None):
     # device = 'cpu' or '0' or '0,1,2,3'
     s = f'YOLOv3 🚀 {git_describe() or date_modified()} torch {torch.__version__} '  # string
     cpu = device.lower() == 'cpu'
+    torch.cuda.is_available()
     if cpu:
         os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # force torch.cuda.is_available() = False
     elif device:  # non-cpu device requested

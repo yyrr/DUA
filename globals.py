@@ -6,7 +6,7 @@ SEVERTITIES = ['5']
 ROBUSTNESS_SEVERITIES = ['5', '4', '3', '2', '1']
 
 KITTI_SEVERITIES = {
-    'fog': ['fog_30', 'fog_40', 'fog_50'],
+    'fog': ['30m', '40m', '50m'],
     'rain': ['200mm', '100mm', '75mm'],
     'snow': ['5', '5', '5']
 }

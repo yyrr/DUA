@@ -24,8 +24,8 @@ PATHS = {
             'ckpt': '/PATH/TO/imagenet/CHECKPOINT',
         },
         'kitti': {
-            'root': '/PATH/TO/kitti/ROOT',
-            'ckpt': '/PATH/TO/kitti-clear/CHECKPOINT',
+            'root': '/opt/dua/data/kitti/',
+            'ckpt': '/opt/dua/checkpoints/kitti/yolov3/initial/weights/best.pt',
         },
     },
 }

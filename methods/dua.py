@@ -30,8 +30,8 @@ def dua(args, net, save_bn_stats=False, use_training_data=False, save_fname=None
             transforms.ToTensor(),
             transforms.Normalize(*NORM)
         ])
-    if not args.dataset == 'imagenet':
-        ckpt = torch.load(args.ckpt_path)
+    # if not args.dataset == 'imagenet':
+    #     ckpt = torch.load(args.ckpt_path)
     decay_factor = args.decay_factor
     min_momentum_constant = args.min_mom
     no_imp = 0
@@ -45,10 +45,10 @@ def dua(args, net, save_bn_stats=False, use_training_data=False, save_fname=None
         mom_pre = 0.1
         results = []
         log.info(f'Task - {args.task} :::: Level - {args.severity}')
-        if not args.dataset == 'imagenet':
-            net.load_state_dict(ckpt)
-        else:
-            init_net(args)
+        # if not args.dataset == 'imagenet':
+        #     net.load_state_dict(ckpt)
+        # else:
+        init_net(args)
 
         net.eval()
         if use_training_data:
@@ -61,10 +61,11 @@ def dua(args, net, save_bn_stats=False, use_training_data=False, save_fname=None
         if args.model == 'yolov3':
             res = test_yolo(model=net, dataloader=valid_loader,
                             iou_thres=args.iou_thres, conf_thres=args.conf_thres,
-                            augment=args.augment)[0] * 100
+                            augment=args.augment,plots=True,save_dir=Path(f'output/{args.task}/before/'))[0] * 100
         else:
             res = test(valid_loader, net)[0] * 100
         log.info(f'{metric} Before Adaptation: {res:.1f}')
+
 
         for i in tqdm(range(1, args.num_samples + 1)):
             net.eval()
@@ -81,11 +82,12 @@ def dua(args, net, save_bn_stats=False, use_training_data=False, save_fname=None
             if args.model == 'yolov3':
                 res = test_yolo(model=net, dataloader=valid_loader,
                                 iou_thres=args.iou_thres, conf_thres=args.conf_thres,
-                                augment=args.augment)[0] * 100
+                                augment=args.augment,plots=True,save_dir=Path(f'output/{args.task}/after/'))[0] * 100
             else:
                 res = test(valid_loader, net)[0] * 100
             results.append(res)
             if result_improved(metric, res, results):
+                log.info(f'Iteration {i}/{args.num_samples}: Improved ')
                 save_bn_stats_in_model(net, args.task)
                 no_imp = 0
                 no_imp_cnt = 0

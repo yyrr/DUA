@@ -9,6 +9,7 @@ from pathlib import Path
 
 import cv2
 import matplotlib
+matplotlib.use('svg')
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd

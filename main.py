@@ -89,9 +89,10 @@ if __name__ == '__main__':
     parser.add_argument('--scenario', default=['online', 'offline'], type=str, nargs='*',
                         help='Scenarios to run (online and/or offline)')
     parser.add_argument('--robustness_severities', default=['5'], type=str, nargs='*')
-    parser.add_argument('--fog_severities', default=['fog_30'], type=str, nargs='*')
+    parser.add_argument('--fog_severities', default=['30m'], type=str, nargs='*')
     parser.add_argument('--rain_severities', default=['200mm'], type=str, nargs='*')
     parser.add_argument('--snow_severities', default=['5'], type=str, nargs='*')
+    # noinspection PyPackageRequirements
     parser.add_argument('--checkpoints_path', default='checkpoints', help='path where model checkpoints will be saved')
     parser.add_argument('--num_runs', default=1, type=int)
     parser.add_argument('--methods', default=['dua'], type=str, nargs='*',
@@ -109,7 +110,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', default=0.01, type=float, help='Learning rate for everything except')
     parser.add_argument('--initial_task_lr', default=0.01, type=float)
     parser.add_argument('--epochs', default=150, type=int)
-    parser.add_argument('--batch_size', default=8, type=int)
+    parser.add_argument('--batch_size', default=6, type=int)
     parser.add_argument('--workers', type=int, default=1, help='maximum number of dataloader workers')
     parser.add_argument('--yolo_lr_adjustment', type=str, default='thirds',
                         choices=['thirds', 'linear_lr', 'cosine'],
